@@ -15,7 +15,7 @@ public class Ruta extends Path2D.Float implements Pintable {
     //Atributos
     private Color color;
     private int width;
-    private long idRuta;
+    private int idRuta;
 
     //Constructores
     public Ruta(Point puntoInicial, Color color, int width) {
@@ -75,7 +75,7 @@ public class Ruta extends Path2D.Float implements Pintable {
         return idRuta;
     }
 
-    public void setIdRuta(long idRuta) {
+    public void setIdRuta(int idRuta) {
         this.idRuta = idRuta;
     }
 
@@ -87,7 +87,7 @@ public class Ruta extends Path2D.Float implements Pintable {
     //TODO
     @Override
     public String getTipoPintable() {
-        return getClass().getSimpleName();
+        return PintableFactory.TipoPintable.RUTA.getTipo();
     }
 
     @Override
@@ -133,6 +133,16 @@ public class Ruta extends Path2D.Float implements Pintable {
             pathIterator.next();
         }
         return puntos;
+    }
+
+    @Override
+    public int getIdPintable() {
+        return idRuta;
+    }
+
+    @Override
+    public void setIdPintable(int idRuta) {
+        this.idRuta = idRuta;
     }
 
     public String toString() {

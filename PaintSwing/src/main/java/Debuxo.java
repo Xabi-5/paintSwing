@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Debuxo {
     //Constantes
@@ -10,7 +11,7 @@ public class Debuxo {
     //Atributos
     private ArrayList<Pintable> figuras;
     private String nome;
-    private long idDebuxo;
+    private int idDebuxo;
 
     //Constructores
     public Debuxo(int idDebuxo, String nome) {
@@ -36,11 +37,11 @@ public class Debuxo {
         this.nome = nome;
     }
 
-    public long getIdDebuxo() {
+    public int getIdDebuxo() {
         return idDebuxo;
     }
 
-    public void setIdDebuxo(long idDebuxo) {
+    public void setIdDebuxo(int idDebuxo) {
         this.idDebuxo = idDebuxo;
     }
 
@@ -69,6 +70,10 @@ public class Debuxo {
 
         }
         return cores;
+    }
+
+    public void setFiguras(List<Pintable> figuras){
+        this.figuras = (ArrayList<Pintable>) figuras;
     }
 
     public ArrayList<Integer> getWidths() {
@@ -152,15 +157,66 @@ public class Debuxo {
                                     pintable = PintableFactory.getPintable(linha);
                                     pintables.add(pintable);
                                     System.out.println("Tipo: "+ linha);
-                                }//pax24
+                                }
+                            }
+                            case 2 -> {
+                                if (pintable != null){
+                                    pintable.addPunto(Integer.parseInt(campos[0].trim()),
+                                            Integer.parseInt(campos[1].trim()));
+                                }
+                            }
+                            case 3 -> {
+                                if(pintable != null){
+                                    pintable.setCor(Integer.parseInt(campos[0].trim()),
+                                            Integer.parseInt(campos[1].trim()),
+                                            Integer.parseInt(campos[2].trim()));
+                                }
                             }
                         }
                     }
                 }
             }
-
-        } catch (IOException e) {
-            System.out.println("Produciuse un erro na lectura do ficheiro");
+        }catch (FileNotFoundException fnt){
+            System.out.println("O arquivo non se puido atopar " + fnt.getMessage());
+        }
+        catch (IOException e) {
+            System.out.println("Produciuse un erro na lectura do ficheiro " + e.getMessage());
         }
     }
+
+    //Revisar se é o mesmo método que saveDebuxoToFile
+    public void savePintablesToFile(File f){
+        try (BufferedWriter bw = new BufferedWriter((new FileWriter(f)))){
+            bw.write(LINE_COMMENT  + " Nome debuxo:" + System.lineSeparator());
+            bw.write(nome + System.lineSeparator());
+            int i = 0;
+            for (var figura : figuras){
+                bw.write(LINE_COMMENT + " Tipo de pintable " + (++i) + ":" + System.lineSeparator());
+                bw.write(figura.getTipoPintable() + System.lineSeparator());
+                bw.write(LINE_COMMENT + " Anchura " + (++i) + ":" + System.lineSeparator());
+                bw.write(figura.getWidth() + System.lineSeparator());
+                bw.write(LINE_COMMENT + " Cor " + (i) + ":" + System.lineSeparator());
+                Color cor = figura.getCor();
+                bw.write(cor.getRed() + "," + cor.getGreen() + "," + cor.getBlue() + System.lineSeparator());
+                bw.write(LINE_COMMENT + " Puntos " + (i) + ":" + System.lineSeparator());
+                ArrayList<Point> puntos = figura.getPuntos();
+                for(Point punto : puntos){
+                    bw.write(punto.x + "," + punto.y + System.lineSeparator());
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Produciuse un erro de E/S");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

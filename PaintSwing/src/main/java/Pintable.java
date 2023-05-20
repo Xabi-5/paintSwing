@@ -25,4 +25,8 @@ public interface Pintable {
     public void addPunto(Point p);
 
     public ArrayList<Point> getPuntos();
+
+    public int getIdPintable();
+
+    public void setIdPintable(int id);
 }
