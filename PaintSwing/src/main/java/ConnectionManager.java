@@ -37,13 +37,13 @@ public class ConnectionManager {
     public static final ConnectionManager getConnectionManager() {
         try {
             if (conexionManager == null || conexionManager.isClosed()) {
-                synchronized (ConnectionManager.class) {
-                    if (conexionManager.isClosed() || conexionManager == null) {
+                /*synchronized (ConnectionManager.class) {
+                    if (conexionManager.isClosed() || conexionManager == null) {*/
                         conexionManager = new ConnectionManager(
                                 DriverManager.getConnection(DB_URL));
                     }
-                }
-            }
+               // }
+           // }
         } catch (SQLException ex) {
             System.out.println("Erro ao conectar" + ex.getMessage());
         }

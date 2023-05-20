@@ -1,14 +1,17 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Lienzo extends JPanel implements MouseMotionListener, MouseListener {
     //Constantes
@@ -58,7 +61,7 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
         popupNome.add(tfNome);
     }
 
-    private void crearGUI(){
+    private void crearGUI() {
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createTitledBorder(control.getNome()));
         setCursor(CURSOR_CRUZ);
@@ -84,22 +87,24 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
         this.grosor = grosor;
     }
 
-    public String getNome(){
+    public String getNome() {
         return control.getNome();
     }
-    public void setNome(String nome){
+
+    public void setNome(String nome) {
         control.setNome(nome);
     }
 
-    public String getTipoFigura(){
+    public String getTipoFigura() {
         return tipoFigura;
     }
-    public void setTipoFigura(String tipoFigura){
+
+    public void setTipoFigura(String tipoFigura) {
         this.tipoFigura = tipoFigura;
     }
 
-    public void saveImage(File f){
-        try(BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(f));) {
+    public void saveImage(File f) {
+        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(f));) {
             BufferedImage imaxe = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D g = (Graphics2D) imaxe.getGraphics();
             paintComponent(g);
@@ -110,17 +115,127 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
         }
     }
 
-    public void clear(){
+    public void clear() {
         control.clear();
         puntos.clear();
         repaint();
     }
 
-    public boolean isDentroTitulo(Point p){
+    public boolean isDentroTitulo(Point p) {
         TitledBorder tituloBorder = (TitledBorder) getBorder();
         FontMetrics fm = this.getFontMetrics(tituloBorder.getTitleFont());
         int anchoTitulo = fm.stringWidth(tituloBorder.getTitle()) + 20;
         Rectangle contorno = new Rectangle(0, 0, anchoTitulo, fm.getHeight());
         return contorno.contains(p);
+    }
+
+    //Operacións con ficheiros
+    public void loadDebuxoFromFile(File f) {
+        control.loadDebuxoFromFile(f);
+    }
+
+    public void saveDebuxoToFile(File f) {
+        control.saveDebuxoToFile(f);
+    }
+
+    public void loadDebuxoFromDB(int idDebuxo) {
+        control.loadDebuxoFromDB(idDebuxo);
+    }
+
+    public void saveDebuxoTODB() {
+        control.saveDebuxoTODB();
+    }
+
+    public List<String> getNomeDebuxos() {
+        return control.getNomeDebuxos();
+    }
+
+    public List<Integer> getIdDebuxos() {
+        return control.getIdDebuxos();
+    }
+
+    //Xestión de eventos
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        puntos.add(e.getPoint());
+        repaint();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        puntos.add(e.getPoint());
+        repaint();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        puntos.add(e.getPoint());
+        repaint();
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if(e.getClickCount() == 1){
+            Border borde = this.getBorder();
+            if(borde instanceof TitledBorder){
+                TitledBorder tituloBorder = (TitledBorder) getBorder();
+                FontMetrics fm = this.getFontMetrics(tituloBorder.getTitleFont());
+                int anchoTitulo = fm.stringWidth(tituloBorder.getTitle()) +20;
+                Rectangle contorno = new Rectangle(0, 0, anchoTitulo, fm.getHeight());
+                if(contorno.contains(e.getPoint())){
+                    tfNome.setText(tituloBorder.getTitle());
+                    Dimension d = tfNome.getPreferredSize();
+                    d.width = anchoTitulo;
+                    popupNome.setPreferredSize(d);
+                    popupNome.show(this, 0, 0);
+                    tfNome.selectAll();
+                    tfNome.requestFocusInWindow();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        if(isDentroTitulo(e.getPoint())){
+            setCursor(CURSOR_TEXTO);
+        }else {
+            setCursor(CURSOR_CRUZ);
+        }
+    }
+
+    @Override
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        ArrayList<Shape> figuras = control.getShapes();
+        ArrayList<Color> cores = control.getColors();
+        ArrayList<Integer> grosores = control.getWidths();
+
+        for (int i = 0; i < figuras.size(); i++) {
+            g2.setColor(cores.get(i));
+            g2.setStroke(new BasicStroke(grosores.get(i), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.draw(figuras.get(i));
+        }
+        g2.setColor(cor);
+        g2.setStroke(new BasicStroke(grosor, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 2f,
+                new float[]{30, 10, 10, 10}, 3f));
+
+        for (int i = 0; i < puntos.size() - 1; i++) {
+            Point p1 = puntos.get(i);
+            Point p2 = puntos.get(i+1);
+            g2.drawLine(p1.x, p1.y, p2.x, p2.y);
+
+        }
     }
 }
