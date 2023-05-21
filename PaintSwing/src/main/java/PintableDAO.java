@@ -20,7 +20,7 @@ public class PintableDAO implements DAO<Pintable, Integer> {
     public List<Pintable> getAll(Optional<Integer> idDebuxo) {
         List<Pintable> pintables = new ArrayList<>();
         try (Statement stPintable = conexion.createStatement(); Statement stPoint = conexion.createStatement()) {
-            ResultSet rsPintable = stPintable.executeQuery("SELECT * FROM Pintable" +
+            ResultSet rsPintable = stPintable.executeQuery("SELECT * FROM Pintable " +
                     idDebuxo.map(id -> "WHERE idDebuxo=" + id).orElse(""));
             while (rsPintable.next()) {
                 ArrayList<Point> puntos = new ArrayList<>();

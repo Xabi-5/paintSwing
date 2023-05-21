@@ -349,3 +349,35 @@ SELECT * FROM PintableWHERE idDebuxo=1 [42102-214]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PINTABLEWHERE" no encontrada
 Table "PINTABLEWHERE" not found; SQL statement:
 SELECT * FROM PintableWHERE idDebuxo=2 [42102-214]
+2023-05-21 00:28:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PINTABLEWHERE" no encontrada
+Table "PINTABLEWHERE" not found; SQL statement:
+SELECT * FROM PintableWHERE idDebuxo=3 [42102-214]
+2023-05-21 00:28:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PINTABLEWHERE" no encontrada
+Table "PINTABLEWHERE" not found; SQL statement:
+SELECT * FROM PintableWHERE idDebuxo=1 [42102-214]
+2023-05-21 00:28:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PINTABLEWHERE" no encontrada
+Table "PINTABLEWHERE" not found; SQL statement:
+SELECT * FROM PintableWHERE idDebuxo=2 [42102-214]
+2023-05-21 00:28:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PINTABLEWHERE" no encontrada
+Table "PINTABLEWHERE" not found; SQL statement:
+SELECT * FROM PintableWHERE idDebuxo=4 [42102-214]
+2023-05-21 00:28:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PINTABLEWHERE" no encontrada
+Table "PINTABLEWHERE" not found; SQL statement:
+SELECT * FROM PintableWHERE idDebuxo=3 [42102-214]
+2023-05-21 00:28:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PINTABLEWHERE" no encontrada
+Table "PINTABLEWHERE" not found; SQL statement:
+SELECT * FROM PintableWHERE idDebuxo=1 [42102-214]
+2023-05-21 00:28:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PINTABLEWHERE" no encontrada
+Table "PINTABLEWHERE" not found; SQL statement:
+SELECT * FROM PintableWHERE idDebuxo=2 [42102-214]
+2023-05-21 00:28:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PINTABLEWHERE" no encontrada
+Table "PINTABLEWHERE" not found; SQL statement:
+SELECT * FROM PintableWHERE idDebuxo=4 [42102-214]
