@@ -67,7 +67,6 @@ public class Debuxo {
         ArrayList<Color> cores = new ArrayList<>();
         for (Pintable p: figuras) {
             cores.add(p.getCor());
-
         }
         return cores;
     }
@@ -176,6 +175,7 @@ public class Debuxo {
                     }
                 }
             }
+            figuras.addAll(pintables);
         }catch (FileNotFoundException fnt){
             System.out.println("O arquivo non se puido atopar " + fnt.getMessage());
         }
@@ -184,7 +184,7 @@ public class Debuxo {
         }
     }
 
-    //Revisar se é o mesmo método que saveDebuxoToFile
+
     public void savePintablesToFile(File f){
         try (BufferedWriter bw = new BufferedWriter((new FileWriter(f)))){
             bw.write(LINE_COMMENT  + " Nome debuxo:" + System.lineSeparator());

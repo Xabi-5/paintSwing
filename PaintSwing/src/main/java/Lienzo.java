@@ -26,7 +26,7 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
 
     //Propiedades
     public static String fileExtension = "png";
-    private Color cor = DEFAULT_COR;
+    private Color cor;
     private int grosor = DEFAULT_GROSOR;
     private String tipoFigura = "Ruta";
 
@@ -39,12 +39,14 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
     //Constructores
     public Lienzo(PaintController control) {
         this.control = control;
+        cor = DEFAULT_COR;
         puntos = new ArrayList<>();
         crearGUI();
     }
 
     public Lienzo() {
         this(null);
+        cor = DEFAULT_COR;
     }
 
     private void crearEditPopup() {
@@ -64,7 +66,7 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
     private void crearGUI() {
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createTitledBorder(control.getNome()));
-        setCursor(CURSOR_CRUZ);
+        setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
         crearEditPopup();
         addMouseMotionListener(this);
         addMouseListener(this);
@@ -111,7 +113,7 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
             ImageIO.write(imaxe, fileExtension, out);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Erro ao escribir no arquivo");
         }
     }
 
@@ -171,7 +173,8 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
     @Override
     public void mouseReleased(MouseEvent e) {
         puntos.add(e.getPoint());
-        puntos.add(null); //Esta linea engadina de probas
+        control.addShape(tipoFigura, puntos, cor, grosor);
+        puntos.clear();
         repaint();
     }
 
@@ -235,12 +238,7 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
         for (int i = 0; i < puntos.size() - 1; i++) {
             Point p1 = puntos.get(i);
             Point p2 = puntos.get(i+1);
-            /*Este if tiven que engadilo eu. Cando o rato é soltado, engadirase un punto null ao Arraylist de puntos
-            * Se ese valor null é detectado, non se debuxara unha linea recta entre os dous puntos.
-            * Sen esto, a aplicacion fai unha liña recta entre o ultimo punto soltado e o primeiro premido*/
-            if(p1 != null && p2 != null){
-                g2.drawLine(p1.x, p1.y, p2.x, p2.y);
-            }
+            g2.drawLine(p1.x, p1.y, p2.x, p2.y);
         }
     }
 }
