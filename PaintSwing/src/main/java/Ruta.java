@@ -25,7 +25,7 @@ public class Ruta extends Path2D.Float implements Pintable {
     }
 
     public Ruta(ArrayList<Point> puntos, Color cor, int width) {
-        this.color = color;
+        this.color = cor;
         this.width = width;
         if (puntos != null && !puntos.isEmpty()) {
             moveTo(puntos.get(0).x, puntos.get(0).y);

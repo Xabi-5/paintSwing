@@ -180,7 +180,7 @@ public final class VentaPaint extends JFrame implements ActionListener {
                     lienzo.getCor() : Lienzo.DEFAULT_COR)) != null) {
                 lienzo.setCor(cor);
             }
-        } else if (e.getSource() == btControles || e.getSource() == mnuOpcions[3]) {
+        } else if (e.getSource() == btControles[3] || e.getSource() == mnuOpcions[3]) {
             Object grosor = showGrosor(lienzo.getGrosor());
             if (grosor != JOptionPane.UNINITIALIZED_VALUE){
                 lienzo.setGrosor((int) grosor);

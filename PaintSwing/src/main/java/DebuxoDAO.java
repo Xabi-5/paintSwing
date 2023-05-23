@@ -190,7 +190,7 @@ public class DebuxoDAO implements DAO<Debuxo, Integer> {
             String linha;
             while ((linha = br.readLine()) != null){
                 linha = linha.trim();
-                if (linha.length() > 0 && (linha.charAt(0) != Debuxo.LINE_COMMENT)){
+                if ((linha.length() > 0) && (linha.charAt(0) != Debuxo.LINE_COMMENT)){
                     if(!nameRead){
                         d.setNome(linha);
                         nameRead = true;
