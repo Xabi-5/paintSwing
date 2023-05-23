@@ -51,7 +51,7 @@ public class PintableDAO implements DAO<Pintable, Integer> {
         }
         try (PreparedStatement psPintable = conexion.prepareStatement("INSERT INTO Pintable" +
                 " (idDebuxo, tipo, width, red, green, blue) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement psPuntos = conexion.prepareStatement("INSERT INTO Point + (idPintable, x, y)" +
+             PreparedStatement psPuntos = conexion.prepareStatement("INSERT INTO Point (idPintable, x, y)" +
                      " VALUES (?,?,?)");) {
             psPintable.setInt(1, idDebuxoFK.get());
             psPintable.setString(2, pintable.getTipoPintable());
@@ -69,7 +69,7 @@ public class PintableDAO implements DAO<Pintable, Integer> {
                 for (Point punto : puntos) {
                     psPuntos.setInt(1, idPintable);
                     psPuntos.setInt(2, punto.x);
-                    psPuntos.setInt(1, punto.y);
+                    psPuntos.setInt(3, punto.y);
                     psPuntos.executeUpdate();
                 }
             }
