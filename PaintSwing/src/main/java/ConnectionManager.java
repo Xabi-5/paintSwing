@@ -3,7 +3,7 @@ import java.sql.*;
 public class ConnectionManager {
     //Constantes
     public static final String JDBC_DRIVER = "org.h2.Driver";
-    public static final String DB_URL = "jdbc:h2:L:\\Programacion\\2023\\paintSwing\\PaintSwing\\src\\main\\resources\\debuxos";
+    public static final String DB_URL = "jdbc:h2:./src/main/resources/debuxos";
 
     //Non van a ser empregados, non hai usuarios
     public static final String DB_USER = "";
